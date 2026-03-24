@@ -1,6 +1,10 @@
 # system-specs-for-research-paper
 
-Generates a ready-to-paste hardware/software specification paragraph for research papers in plain text, LaTeX, and a raw key-value format.
+Collects hardware and software specifications from the current machine and writes three files:
+
+- **`specs.txt`** — plain-text paragraph, ready to paste into any document
+- **`specs.tex`** — LaTeX-safe version of the same paragraph (underscores escaped)
+- **`specs_raw.txt`** — individual fields as `Key: Value` pairs, one per line
 
 ## Example output
 
@@ -73,23 +77,17 @@ python3 get_specs.py   # Linux / macOS
 python  get_specs.py   # Windows
 ```
 
-Three files are written to the current directory:
-
-| File | Contents |
-|---|---|
-| `specs.txt` | Plain-text paragraph, ready to paste into any document |
-| `specs.tex` | LaTeX-safe paragraph (underscores escaped with `\_`) |
-| `specs_raw.txt` | Individual fields, one per line (`Key: Value`) |
-
-The same paragraph is also printed to the terminal.
+Three files are written to the current directory. The same paragraph is also printed to the terminal.
 
 > **Note:** All three output files are excluded from git (via `.gitignore`) to avoid accidentally publishing your machine's hardware details.
 
-## Paste into your paper
+### `specs.txt` — plain-text paragraph
 
-**Plain text** (`specs.txt`) — paste directly into any document.
+A single ready-to-paste sentence describing your hardware and software environment. Use this for Word documents, Google Docs, or any plain-text submission.
 
-**LaTeX** (`specs.tex`) — paste into your `.tex` file:
+### `specs.tex` — LaTeX paragraph
+
+Identical to `specs.txt` but with underscores escaped (`\_`) for safe inclusion in LaTeX documents. Drop it into your paper with:
 
 ```latex
 \section{Experimental Setup}
@@ -98,4 +96,6 @@ The same paragraph is also printed to the terminal.
 
 or copy-paste the contents inline.
 
-**Raw fields** (`specs_raw.txt`) — useful if you want to hand-pick individual values rather than use the full paragraph.
+### `specs_raw.txt` — raw key-value fields
+
+Each spec on its own line (`Key: Value`), covering OS, kernel, CPU, RAM, GPU, CUDA/ROCm, ML frameworks, and storage. Useful when you want to hand-pick individual values or build your own sentence rather than use the generated paragraph.
