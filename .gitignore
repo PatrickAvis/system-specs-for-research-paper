@@ -1,0 +1,8 @@
+venv/
+.venv/
+__pycache__/
+*.pyc
+specs.txt
+specs.tex
+specs_raw.txt
+.claude/
