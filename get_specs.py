@@ -144,6 +144,8 @@ else:  # Linux
 gpu_info     = ""
 cuda_version = ""
 
+# NVIDIA is checked first; rocm-smi is only used if nvidia-smi is absent,
+# since a machine is unlikely to have both driver stacks active simultaneously.
 nvidia_check = run("where nvidia-smi" if IS_WINDOWS else "command -v nvidia-smi")
 rocm_check   = run("where rocm-smi"   if IS_WINDOWS else "command -v rocm-smi")
 
@@ -258,6 +260,7 @@ jaxlib_version= py_import("import jaxlib; print(jaxlib.__version__)")
 framework_parts = []
 if torch_version:
     t = f"PyTorch {torch_version}"
+    # torch.version.cuda returns the string "None" (not Python None) for CPU-only builds
     if torch_cuda and torch_cuda != "None":
         t += f" (CUDA {torch_cuda})"
     framework_parts.append(t)
@@ -286,9 +289,7 @@ if IS_WINDOWS:
     )
 
 elif IS_MAC:
-    # diskutil info -all prints info per disk; grab "Disk Size" lines
-    out = run("diskutil list -plist | plutil -extract AllDisksAndPartitions xml1 -o - -")
-    # Simpler: use system_profiler
+    # system_profiler reports each volume's capacity including the byte count in parentheses
     raw = run("system_profiler SPStorageDataType | grep 'Capacity'")
     total_bytes = 0
     for line in raw.splitlines():
@@ -301,6 +302,8 @@ elif IS_MAC:
                 pass
 
 else:  # Linux
+    # -b: output sizes in bytes; -d: skip partitions (physical drives only);
+    # tail -n +2 strips the "SIZE" header row
     storage_bytes_raw = run("lsblk -b -d -o SIZE | tail -n +2")
     total_bytes = sum(int(x) for x in storage_bytes_raw.split() if x.isdigit())
 
