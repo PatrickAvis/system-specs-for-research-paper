@@ -59,7 +59,11 @@ Storage: 14901 GB
 ## Setup
 
 ```bash
-# Clone or copy the repo, then create a virtual environment
+# Clone the repo
+git clone https://github.com/PatrickAvis/system-specs-for-research-paper.git
+cd system-specs-for-research-paper
+
+# Create a virtual environment
 python3 -m venv venv          # Linux / macOS
 python  -m venv venv          # Windows
 
