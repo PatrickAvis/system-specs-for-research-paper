@@ -1,6 +1,6 @@
-# system-specs-for-paper
+# system-specs-for-research-paper
 
-Generates a ready-to-paste hardware/software specification paragraph for research papers — in plain text, LaTeX, and a raw key-value format.
+Generates a ready-to-paste hardware/software specification paragraph for research papers in plain text, LaTeX, and a raw key-value format.
 
 ## Example output
 
